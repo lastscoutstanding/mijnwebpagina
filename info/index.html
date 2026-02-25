@@ -17,33 +17,55 @@
             background: #1c1c1c;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(255,255,255,0.1);
+            box-shadow: 0px 0px 20px rgba(255,255,255,0.1);
         }
-        h1 {
-            color: #ff5555;
-        }
-        p {
-            font-size: 18px;
-            line-height: 1.5;
-        }
-        .highlight {
-            color: #ffcc00;
-            font-weight: bold;
+        h1 { color: #ff5555; }
+        p { font-size: 18px; }
+        .highlight { color: #ffcc00; font-weight: bold; }
+        .info-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #222;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Security Awareness Test</h1>
-        <p>You have reached this page (at SlOUX.eu) because you clicked on a link that you <span class="highlight">should not have clicked</span>.</p>
+        <p>You clicked a link that you <span class="highlight">should not have clicked</span>.</p>
         <p>This was part of an internal cybersecurity awareness exercise.</p>
+
+        <div class="info-box" id="userInfo">
+            <p><strong>Your IP address:</strong> loading...</p>
+            <p><strong>Your location:</strong> loading...</p>
+            <p><strong>Your ISP:</strong> loading...</p>
+        </div>
+
         <p>Please remember:</p>
         <p>
             • Always verify the sender.<br>
             • Be cautious with unexpected links.<br>
             • When in doubt, ask before you click.
         </p>
-        <p>Thank you for participating and helping keep our organization secure.</p>
     </div>
+
+    <script>
+        // Gebruik ipapi.co API voor IP, locatie en ISP
+        fetch("https://ipapi.co/json/")
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("userInfo").innerHTML = `
+                    <p><strong>Your IP address:</strong> ${data.ip}</p>
+                    <p><strong>Your location:</strong> ${data.city}, ${data.country_name}</p>
+                    <p><strong>Your ISP:</strong> ${data.org}</p>
+                `;
+            })
+            .catch(() => {
+                document.getElementById("userInfo").innerHTML = "<p>Could not retrieve user info.</p>";
+            });
+    </script>
 </body>
 </html>
