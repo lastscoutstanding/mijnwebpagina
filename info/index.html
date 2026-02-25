@@ -76,3 +76,33 @@
         <div class="info-box" id="userInfo">
             <p><strong>Your IP address:</strong> loading...</p>
             <p><strong>Your location:</strong> loading...</p>
+            <p><strong>Your ISP:</strong> loading...</p>
+        </div>
+
+        <p style="margin-top: 25px;">Remember:</p>
+        <p>
+            • Always verify the sender.<br>
+            • Inspect links before clicking.<br>
+            • Be cautious with unexpected or “urgent” messages.<br>
+            • When in doubt, ask before you click.
+        </p>
+    </div>
+
+    <script>
+        // Fetch IP/location from ipapi.co
+        fetch("https://ipapi.co/json/")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("userInfo").innerHTML = `
+                    <p><strong>Your IP address:</strong> ${data.ip}</p>
+                    <p><strong>Your location:</strong> ${data.city || "Unknown"}, ${data.country_name || "Unknown"}</p>
+                    <p><strong>Your ISP:</strong> ${data.org || "Unknown"}</p>
+                `;
+            })
+            .catch(err => {
+                document.getElementById("userInfo").innerHTML =
+                    "<p>Could not retrieve user information.</p>";
+            });
+    </script>
+</body>
+</html>
