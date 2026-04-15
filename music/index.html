@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Muziek Zoeker (Proxy Versie)</title>
+    <title>Muziek Zoeker (Proxy Versie 2)</title>
     <style>
         body, html { margin: 0; height: 100%; font-family: sans-serif; overflow: hidden; }
         .header { height: 60px; background: #222; color: white; display: flex; align-items: center; padding: 0 20px; gap: 10px; }
@@ -44,7 +44,9 @@
         document.getElementById('wikiFrame').src = `https://wikipedia.org{encoded}`;
         
         // Discogs met de 'x-frame-bypass' truc
+        // Gebruik BACKTICKS (toets naast de 1) voor de URL:
         document.getElementById('discogsFrame').src = `https://discogs.com{encoded}`;
+
     }
 
     document.getElementById('searchInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') performSearch(); });
