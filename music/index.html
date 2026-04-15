@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muziek Zoeker</title>
+    <style>
+        body, html { margin: 0; height: 100%; font-family: sans-serif; overflow: hidden; }
+        .header { height: 60px; background: #333; color: white; display: flex; align-items: center; padding: 0 20px; }
+        .header input { padding: 8px; width: 300px; border-radius: 4px; border: none; }
+        .header button { padding: 8px 15px; margin-left: 10px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        .container { display: flex; height: calc(100% - 60px); }
+        iframe { flex: 1; border: 1px solid #ccc; height: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <input type="text" id="searchInput" placeholder="Zoek op artiest of album...">
+    <button onclick="performSearch()">Zoek</button>
+</div>
+
+<div class="container">
+    <!-- Linker frame voor Discogs -->
+    <iframe id="discogsFrame" src="about:blank" name="discogs"></iframe>
+    <!-- Rechter frame voor AllMusic -->
+    <iframe id="allmusicFrame" src="about:blank" name="allmusic"></iframe>
+</div>
+
+<script>
+    function performSearch() {
+        const query = document.getElementById('searchInput').value;
+        if (!query) return;
+
+        // Encodeer de zoekterm voor URL's
+        const encodedQuery = encodeURIComponent(query);
+
+        // Stel de zoek-URL's samen
+        const discogsUrl = `https://discogs.com{encodedQuery}`;
+        const allmusicUrl = `https://allmusic.com{encodedQuery}`;
+
+        // Update de frames
+        document.getElementById('discogsFrame').src = discogsUrl;
+        document.getElementById('allmusicFrame').src = allmusicUrl;
+    }
+
+    // Laat de zoekopdracht ook werken bij het drukken op 'Enter'
+    document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+</script>
+
+</body>
+</html>
